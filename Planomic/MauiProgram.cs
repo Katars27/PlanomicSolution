@@ -4,7 +4,6 @@ using Planomic;
 using Planomic.Services;
 using Planomic.Views;
 
-
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -17,11 +16,17 @@ public static class MauiProgram
                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                });
 
+        // Регистрация сервисов
         builder.Services.AddDbContext<AppDbContext>();
-
         builder.Services.AddSingleton<DatabaseService>();
         builder.Services.AddSingleton<ProjectsPage>();
+        builder.Services.AddSingleton<MainPage>();
 
-        return builder.Build();
+        var app = builder.Build();
+
+        // Передача ServiceProvider в App
+        App.ServiceProvider = app.Services;
+
+        return app;
     }
 }

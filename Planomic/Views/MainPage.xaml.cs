@@ -1,25 +1,20 @@
-﻿namespace Planomic
+﻿using Microsoft.Maui.Controls;
+using Planomic.Views;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Planomic.Views
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void OnProjectsClicked(object sender, EventArgs e)
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            var databaseService = App.ServiceProvider.GetService<Planomic.Services.DatabaseService>();
+            await Navigation.PushAsync(new ProjectsPage(databaseService));
         }
     }
-
 }
